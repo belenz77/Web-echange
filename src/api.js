@@ -26,13 +26,15 @@ function getMarkets(coin){
   .then(res => res.json())
   .then(res => res.data)
 }
-function getEchange(id){
-  return fetch (`${url}/exchange/${id}`)
+function getExchange(id){
+  return fetch (`${url}/exchanges/${id}`)
+  .then(res => res.json())
+  .then(res => res.data)
 }
 export default{
 getAssets,
 getAsset,
 getAssetHistory,
 getMarkets,
-getEchange
+getExchange
 }

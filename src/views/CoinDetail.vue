@@ -85,6 +85,7 @@
           <td>{{m.baseSymbol}} / {{ m.quoteSymbol}}</td>
           <td>
             <PxButton
+            :isLoading="m.isLoading || false"
             v-if="!m.url"
              @click="getWebsite(m)" >
               <slot>Obtener link</slot>
@@ -147,9 +148,18 @@ export default {
 
   methods: {
     getWebsite(exchange){
+         this.$set(exchange, 'isLoading', true)
+
       return api.getExchange(exchange.exchangeId).then(res =>{
-        exchange.url = res.exchangeUrl
+      //  exchange.url = res.exchangeUrl
+        this.$set(exchange, 'url', res.exchangeUrl)
+        //this.$st nos ayudado a monstar una elemto que hemos agregado al final
       })
+      .finally(() =>{
+           this.$set(exchange, 'isLoading', false)
+      }
+
+      )
     },
     getCoin() {
       const id = this.$route.params.id
