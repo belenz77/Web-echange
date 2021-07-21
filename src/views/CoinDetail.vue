@@ -79,59 +79,62 @@
 </template>
 
 <script>
-	import api from "@/api";
-	export default {
-		name: "CoinDetail",
+import api from '@/api'
 
-		data() {
-			return {
-				isLoading: false,
-				asset: {},
-				history: [],
-			};
-		},
+export default {
+  name: 'CoinDetail',
 
-		computed: {
-			min() {
-				return Math.min(
-					this.history.map((h) => parseFloat(h.priceUsd).toFixed(2)),
-				);
-			},
-			max() {
-				return Math.max(
-					this.history.map((h) => parseFloat(h.priceUsd).toFixed(2)),
-				);
-			},
-			avg() {
-				return (
-					this.history.reduce((a, b) => a + parseFloat(b.priceUsd), 0) /
-					this.history.length
-				);
-			},
-		},
+  data() {
+    return {
+      isLoading: false,
+      asset: {},
+      history: []
+    }
+  },
 
-		created() {
-			this.getCoin();
-		},
+  computed: {
+    min() {
+      return Math.min(
+        ...this.history.map(h => parseFloat(h.priceUsd).toFixed(2))
+      )
+    },
 
-		methods: {
-			getCoin() {
-				const id = this.$route.params.id;
-				this.isLoading = true;
+    max() {
+      return Math.max(
+        ...this.history.map(h => parseFloat(h.priceUsd).toFixed(2))
+      )
+    },
 
-				Promise.all([api.getAsset(id), api.getAssetHistory(id)])
-					.then(([asset, history]) => {
-						(this.asset = asset), (this.history = history);
-					})
-					.finally(() => (this.isLoading = false));
-			},
-		},
-	};
+    avg() {
+      return Math.abs(
+        ...this.history.map(h => parseFloat(h.priceUsd).toFixed(2))
+      )
+    }
+  },
+
+  created() {
+    this.getCoin()
+  },
+
+  methods: {
+    getCoin() {
+      const id = this.$route.params.id
+      this.isLoading = true
+
+      Promise.all([api.getAsset(id), api.getAssetHistory(id)])
+        .then(([asset, history]) => {
+          this.asset = asset
+          this.history = history
+        })
+        .finally(() => (this.isLoading = false))
+    }
+  }
+}
 </script>
 
 <style scoped>
-	td {
-		padding: 10px;
-		text-align: center;
-	}
+td {
+  padding: 10px;
+  text-align: center;
+}
 </style>
