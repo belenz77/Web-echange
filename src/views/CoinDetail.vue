@@ -53,7 +53,7 @@
           @click="toggleConverter"
             class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
           >
-          {{fromUsd ? `USD a ${asset.symbol} : ${asset.symbol} a USD}}`
+          {{fromUsd ? `USD a ${asset.symbol}` : `${asset.symbol} a USD`}}
           </button>
 
           <div class="flex flex-row my-5">
@@ -63,11 +63,12 @@
                 id="convertValue"
                 type="number"
                 class="text-center bg-white focus:outline-none focus:shadow-outline border border-gray-300 rounded-lg py-2 px-4 block w-full appearance-none leading-normal"
+                :placeholder="` valor en ${fromUsd ? 'USD' : asset.symbol }`"
               />
             </label>
           </div>
 
-          <span class="text-xl">{{convertResult}}</span>
+          <span class="text-xl">{{convertResult}} {{fromUsd ? asset.symbol : 'USD'}} </span>
         </div>
       </div>
 
