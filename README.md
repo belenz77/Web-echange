@@ -9,7 +9,7 @@ npm install
 ```
 npm run serve
 ```
-
+## link https://thierno-cryrpto-exchange.netlify.app/
 ### Compiles and minifies for production
 ```
 npm run build
